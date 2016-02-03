@@ -2,50 +2,104 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>employees</groupId>
-  <artifactId>it.matteoavanzini.examples</artifactId>
+  <groupId>it.matteoavanzini.examples</groupId>
+  <artifactId>employees</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>it.matteoavanzini.examples</name>
+  <name>employees</name>
   <url>http://maven.apache.org</url>
 
   <properties>
+  	<jdk.version>1.8</jdk.version>
+	<junit.version>4.11</junit.version>
+	<log4j.version>1.2.17</log4j.version>
+	<lanterna.version>2.1.9</lanterna.version>
+	<mysql.version>5.1.14</mysql.version>
+	<hibernate.version>4.3.5.Final</hibernate.version>
+	<hibernate.common.version>4.0.4.Final</hibernate.common.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
+  		<dependency>
+	        <groupId>com.googlecode.lanterna</groupId>
+	        <artifactId>lanterna</artifactId>
+	        <version>${lanterna.version}</version>
+	    </dependency>
   
   		<dependency>
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>4.0.4.Final</version>
+			<version>${hibernate.common.version}</version>
 		</dependency>
 		  		
   		<!-- Hibernate EntityManager  --> 
     	<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.5.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
+        
         <!-- Hibernate Core --> 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.5.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         
         <dependency>
 	  		<groupId>mysql</groupId>
 	  		<artifactId>mysql-connector-java</artifactId>
-	  		<version>5.1.14</version>
+	  		<version>${mysql.version}</version>
 		</dependency>
   
 	    <dependency>
-	      <groupId>junit</groupId>
-	      <artifactId>junit</artifactId>
-	      <version>3.8.1</version>
-	      <scope>test</scope>
-	    </dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
   </dependencies>
+  
+  <build>
+		<finalName>employees</finalName>
+		<plugins>
+			<!-- Set a JDK compiler level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- Make this jar executable -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+				  <!-- DO NOT include log4j.properties file in your Jar -->
+				  <excludes>
+					<exclude>**/log4j.properties</exclude>
+				  </excludes>
+				  <archive>
+					<manifest>
+						<!-- Jar file entry point -->
+						<mainClass>employees.it.matteoavanzini.examples.App</mainClass>
+					</manifest>
+				  </archive>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>
